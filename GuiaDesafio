@@ -1,0 +1,48 @@
+Desafio de Implementação em Python: Sistema de Gestão de Biblioteca Simplificado
+Que tal um desafio de nível intermediário na área de orientação a objetos e manipulação de dados? Você vai criar um pequeno sistema de gestão de biblioteca.
+
+O Desafio
+Seu objetivo é desenvolver um conjunto de classes em Python para gerenciar livros e usuários em uma biblioteca. O sistema deve permitir as seguintes funcionalidades:
+
+Classe Livro:
+
+Deve ter atributos para título, autor, ISBN (um identificador único para o livro) e um status de disponibilidade (indicando se o livro está disponível ou emprestado).
+
+Um método para emprestar o livro (se disponível) e outro para devolver o livro.
+
+Um método __str__ para uma representação amigável do livro (ex: "Título (Autor) - ISBN: 1234567890 - Disponível").
+
+Classe Usuario:
+
+Deve ter atributos para nome, ID de usuário (único) e uma lista de livros emprestados (inicialmente vazia).
+
+Um método emprestar_livro(livro) que tenta emprestar um livro. Se o livro estiver disponível, ele deve ser adicionado à lista de livros emprestados do usuário e o status do livro deve ser atualizado. Caso contrário, deve informar que o livro não está disponível.
+
+Um método devolver_livro(livro) que remove o livro da lista de livros emprestados do usuário e atualiza o status do livro para disponível.
+
+Um método __str__ para uma representação amigável do usuário (ex: "Nome do Usuário (ID: 001)").
+
+Classe Biblioteca:
+
+Deve ter atributos para uma lista de livros e uma lista de usuários.
+
+Um método adicionar_livro(livro) que adiciona um livro à biblioteca, verificando se o ISBN já existe para evitar duplicatas.
+
+Um método remover_livro(isbn) que remove um livro da biblioteca pelo ISBN.
+
+Um método registrar_usuario(usuario) que adiciona um usuário à biblioteca, verificando se o ID de usuário já existe.
+
+Um método encontrar_livro(isbn) que retorna o objeto Livro se encontrado pelo ISBN, ou None caso contrário.
+
+Um método encontrar_usuario(id_usuario) que retorna o objeto Usuario se encontrado pelo ID, ou None caso contrário.
+
+Um método listar_livros_disponiveis() que imprime todos os livros disponíveis na biblioteca.
+
+Um método emprestar_item(isbn, id_usuario) que coordena o empréstimo: encontra o livro e o usuário, e então chama o método de empréstimo do usuário.
+
+Um método devolver_item(isbn, id_usuario) que coordena a devolução: encontra o livro e o usuário, e então chama o método de devolução do usuário.
+
+Requisitos Adicionais
+Implemente tratamento de erros básico (ex: tentar emprestar um livro indisponível, remover um livro ou usuário que não existe).
+
+Garanta que o ISBN e o ID de usuário sejam sempre únicos.
