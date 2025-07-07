@@ -1,20 +1,25 @@
-class Livro:
-    def __init__(self, titulo, autor, ISBN):
-        self.titulo = titulo
-        self.autor = autor
+class Book:
+    def __init__(self, title, author, ISBN):
+        self.title = title
+        self.author = author
         self.isbn = ISBN
-        self.disponivel = True
+        self.available = True
+        self.left = self.right = None
     
 
 
-class Usuario:
-    def __init__(self, nome, id):
-        self.nome = nome
-        self.id = id
-        self.emprestimos = []
+class Users:
+    def __init__(self):
+        self.user = {}
+        
+    def new_user(self, name, id):
+        self.user[id] = {
+            "name": name,
+            "loans": []
+        }
         
 
 
-class Biblioteca:
+class Library:
     def __init__(self):
-        self.info = None
+        self.root = None

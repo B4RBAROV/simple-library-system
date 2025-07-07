@@ -46,3 +46,18 @@ Requisitos Adicionais
 Implemente tratamento de erros básico (ex: tentar emprestar um livro indisponível, remover um livro ou usuário que não existe).
 
 Garanta que o ISBN e o ID de usuário sejam sempre únicos.
+
+**Book:**
+- borrow()
+- return_book()
+- __str__
+
+**Users:**
+- borrow_book()
+- return_book()
+
+**Library:**
+- add_book()
+- find_book()
+- remove_book()
+- list_available_books()
