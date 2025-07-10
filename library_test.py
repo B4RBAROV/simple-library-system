@@ -17,5 +17,3 @@ books_data = [
 
 for book in books_data:
     library.add_book(book["ISBN"], book["title"], book["author"])
-# Falta implementear a verificação se o código já existe no sistema.
-# Fazer isso como prioridade.

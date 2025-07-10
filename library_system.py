@@ -8,17 +8,22 @@ class Book:
         
         
     def add_book(self, ISBN, title, author):
+        if ISBN == self.isbn:
+            print('ISBN alread exist!')
+            return False
+        
         if ISBN < self.isbn:
             if self.left == None:
                 self.left = Book(ISBN, title, author)
-                return
-            self.left.add_book(ISBN, title, author)
-            return
+                return True
+            
+            return self.left.add_book(ISBN, title, author)
         
         if self.right == None:
             self.right = Book(ISBN, title, author)
-            return
-        self.right.add_book(ISBN, title, author)
+            return True
+            
+        return self.right.add_book(ISBN, title, author)
 
     
 
@@ -26,6 +31,7 @@ class Book:
 class Users:
     def __init__(self):
         self.user = {}
+        
         
     def new_user(self, id, name):
         self.user[id] = {
@@ -42,8 +48,10 @@ class Library:
     
     def add_book(self, ISBN, title, author):
         if self.root != None:
-            self.root.add_book(ISBN, title, author)
-            return print('New book cataloged!')
+            sys_return = self.root.add_book(ISBN, title, author)
+            
+            if sys_return:
+                return print('New book cataloged!')
         
         self.root = Book(ISBN, title, author)
         return print('New book cataloged!')
