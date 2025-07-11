@@ -15,5 +15,19 @@ books_data = [
     {"ISBN": "978-0062315811", "title": "The Alchemist", "author": "Paulo Coelho"}
 ]
 
+users_data = [
+    {"id": "U001", "name": "Alice Smith"},
+    {"id": "U002", "name": "Bob Johnson"},
+    {"id": "U003", "name": "Carol White"},
+    {"id": "U004", "name": "David Green"},
+    {"id": "U001", "name": "Alice Smith Duplicada"} # Para testar a duplicidade
+]
+
+
+
+
 for book in books_data:
     library.add_book(book["ISBN"], book["title"], book["author"])
+     
+for user in users_data:
+    library.add_user(user["id"], user["name"])

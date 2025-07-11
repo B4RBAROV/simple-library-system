@@ -9,49 +9,60 @@ class Book:
         
     def add_book(self, ISBN, title, author):
         if ISBN == self.isbn:
-            print('ISBN alread exist!')
-            return False
+            print('ISBN already exists!\n')
+            return
         
         if ISBN < self.isbn:
             if self.left == None:
                 self.left = Book(ISBN, title, author)
-                return True
+                print('New book cataloged!\n')
+                return
             
             return self.left.add_book(ISBN, title, author)
         
         if self.right == None:
             self.right = Book(ISBN, title, author)
-            return True
+            print('New book cataloged!\n')
+            return
             
         return self.right.add_book(ISBN, title, author)
 
     
 
 
-class Users:
+class User:
     def __init__(self):
         self.user = {}
         
         
     def new_user(self, id, name):
+        if id in self.user:
+            print('User id already exists!\n')
+            return
+        
         self.user[id] = {
             "name": name,
             "loans": []
         }
+        print('User registered!\n')
         
 
 
 class Library:
     def __init__(self):
         self.root = None
+        self.user_manager = User()
         
     
     def add_book(self, ISBN, title, author):
         if self.root != None:
-            sys_return = self.root.add_book(ISBN, title, author)
-            
-            if sys_return:
-                return print('New book cataloged!')
+            self.root.add_book(ISBN, title, author)
+            return
         
         self.root = Book(ISBN, title, author)
-        return print('New book cataloged!')
+    
+    
+    def add_user(self, id, name):
+        self.user_manager.new_user(id, name)
+        
+        
