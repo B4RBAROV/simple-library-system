@@ -1,32 +1,54 @@
 class Book:
-    def __init__(self, ISBN, title, author):
+    def __init__(self, isbn, title, author):
         self.title = title
         self.author = author
-        self.isbn = ISBN
+        self.isbn = isbn
         self.available = True
         self.left = self.right = None
         
         
-    def add_book(self, ISBN, title, author):
-        if ISBN == self.isbn:
+    def __str__(self):
+        return 'Livro: {} ({});\nBy: {}.\n'.format(self.title, self.isbn, self.author)
+        
+        
+    def add_book(self, isbn, title, author):
+        if isbn == self.isbn:
             print('ISBN already exists!\n')
             return
         
-        if ISBN < self.isbn:
+        if isbn < self.isbn:
             if self.left == None:
-                self.left = Book(ISBN, title, author)
+                self.left = Book(isbn, title, author)
                 print('New book cataloged!\n')
                 return
             
-            return self.left.add_book(ISBN, title, author)
+            return self.left.add_book(isbn, title, author)
         
         if self.right == None:
-            self.right = Book(ISBN, title, author)
+            self.right = Book(isbn, title, author)
             print('New book cataloged!\n')
             return
             
-        return self.right.add_book(ISBN, title, author)
-
+        return self.right.add_book(isbn, title, author)
+    
+    
+    def find_book(self, isbn):
+        if isbn == self.isbn:
+            return print(str(self))
+        
+        if isbn < self.isbn:
+            if self.left == None:
+                print("Didn't find any book with ISBN = {}\n".format(isbn))
+                return
+            
+            self.left.find_book(isbn)
+            return
+        
+        if self.right == None:
+            print("Didn't find any book with ISBN = {}\n".format(isbn))
+            return
+        
+        self.right.find_book(isbn)
     
 
 
@@ -54,15 +76,21 @@ class Library:
         self.user_manager = User()
         
     
-    def add_book(self, ISBN, title, author):
+    def add_book(self, isbn, title, author):
         if self.root != None:
-            self.root.add_book(ISBN, title, author)
+            self.root.add_book(isbn, title, author)
             return
         
-        self.root = Book(ISBN, title, author)
+        self.root = Book(isbn, title, author)
     
     
     def add_user(self, id, name):
         self.user_manager.new_user(id, name)
         
         
+    def find_book(self, isbn):
+        if self.root != None:
+            self.root.find_book(isbn)
+            return 
+        
+        print("No books have been cataloged in this library yet!")
