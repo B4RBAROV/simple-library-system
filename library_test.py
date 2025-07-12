@@ -20,7 +20,8 @@ users_data = [
     {"id": "U002", "name": "Bob Johnson"},
     {"id": "U003", "name": "Carol White"},
     {"id": "U004", "name": "David Green"},
-    {"id": "U001", "name": "Alice Smith Duplicada"} # Para testar a duplicidade
+    {"id": "U001", "name": "Alice Smith Duplicada"}, # Para testar a duplicidade
+    {"id": "U005", "name": "Ana Lívia Noleto"}
 ]
 
 
@@ -35,7 +36,7 @@ print("\n--- Testando add_user ---")
 for user in users_data:
     library.add_user(user["id"], user["name"])
 
-
+'''
 print("\n--- Testando find_book ---")
 
 # Caso 1: Livro que existe (The Great Gatsby - ISBN 978-0743273565)
@@ -57,3 +58,6 @@ library.find_book("978-9999999999")
 # Caso 5: Buscar ISBN duplicado (ISBN 978-0743273565) - deve encontrar The Great Gatsby
 print(f"Buscando ISBN (duplicado): 978-0743273565")
 library.find_book("978-0743273565")
+'''
+
+library.list_available_books()

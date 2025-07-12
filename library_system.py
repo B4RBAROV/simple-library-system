@@ -16,13 +16,13 @@ class Book:
             return False
         
         if isbn < self.isbn:
-            if self.left == None:
+            if self.left is None:
                 self.left = Book(isbn, title, author)
                 return True
             
             return self.left.add_book(isbn, title, author)
         
-        if self.right == None:
+        if self.right is None:
             self.right = Book(isbn, title, author)
             return True
             
@@ -34,15 +34,26 @@ class Book:
             return self
         
         if isbn < self.isbn:
-            if self.left == None:
+            if self.left is None:
                 return
             
             return self.left.find_book(isbn)
         
-        if self.right == None:
+        if self.right is None:
             return
         
         return self.right.find_book(isbn)
+    
+    
+    def list_available_books(self):
+        if self.left is not None:
+            self.left.list_available_books()
+            
+        if self.available:
+            print(self.__str__())
+        
+        if self.right is not None:
+            self.right.list_available_books()
     
 
 
@@ -70,35 +81,53 @@ class Library:
         
     
     def add_book(self, isbn, title, author):
-        if self.root != None:
+        if self.root is not None:
             sys_return = self.root.add_book(isbn, title, author)
             
             if sys_return:
-             return print('New book cataloged!\n')
+             print('New book cataloged!\n')
+             return sys_return
          
-            return print('ISBN already exists!\n')
+            print('ISBN already exists!\n')
+            return sys_return
         
         self.root = Book(isbn, title, author)
         print('New book cataloged!\n')
+        return True
     
     
     def add_user(self, id, name):
         sys_return = self.user_manager.new_user(id, name)
         
         if sys_return:
-            return print('User registered!\n')
+            print('User registered!\n')
+            return sys_return
         
         print('User id already exists!\n')
+        return sys_return
         
         
     def find_book(self, isbn):
-        if self.root != None:
+        if self.root is not None:
             sys_return = self.root.find_book(isbn)
             
-            if sys_return != None:
-                return print(sys_return.__str__())
+            if sys_return is not None:
+                print(sys_return.__str__())
+                return sys_return
             
-            return print("Didn't find any book with ISBN = {}\n".format(isbn))
+            print("Didn't find any book with ISBN = {}\n".format(isbn))
+            return sys_return
              
         
         print("No books have been cataloged in this library yet!")
+        return None
+        
+    
+    def list_available_books(self):
+        if self.root is not None:
+            print("-------Available Books-------")
+            self.root.list_available_books()
+            return True
+        
+        print("No books have been cataloged in this library yet!")
+        return False
