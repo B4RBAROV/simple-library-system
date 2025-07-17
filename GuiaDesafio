@@ -57,7 +57,7 @@ Garanta que o ISBN e o ID de usuário sejam sempre únicos.
 - return_book()
 
 **Library:**
-- add_book() ok
-- find_book() ok
+- ~~add_book()~~
+- ~~find_book()~~
 - remove_book()
-- list_available_books()
+- ~~list_available_books()~~
