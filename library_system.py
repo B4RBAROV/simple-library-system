@@ -29,6 +29,11 @@ class Book:
         return self.right.add_book(isbn, title, author)
     
     
+    def borrow(self, isbn):
+        pass
+    
+    
+    
     def find_book(self, isbn):
         if isbn == self.isbn:
             return self
@@ -71,6 +76,16 @@ class User:
             "loans": []
         }
         return True
+    
+    
+    def borrow_book(self, id, isbn):
+        if id in self.user:
+            book = Library.find_book(isbn)
+            
+            if book:
+                pass
+        
+        return False # user id not founded
         
 
 
@@ -121,6 +136,14 @@ class Library:
         
         print("No books have been cataloged in this library yet!")
         return None
+    
+    
+    def borrow_book(self, id, isbn):
+        if self.root is not None:
+            sys_return = self.user_manager.borrow_book(id, isbn)
+            
+        if sys_return:
+            pass
         
     
     def list_available_books(self):
