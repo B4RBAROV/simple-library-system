@@ -28,9 +28,10 @@ class Book:
             
         return self.right.add_book(isbn, title, author)
     
-    
+    # ----------------FUNCT FUTURA-------------------
     def borrow(self, isbn):
         pass
+    # -----------------------------------------------
     
     
     
@@ -77,16 +78,23 @@ class User:
         }
         return True
     
-    
+    # --------------------EM CRIAÇÃO-----------------------
     def borrow_book(self, id, isbn):
         if id in self.user:
             book = Library.find_book(isbn)
             
-            if book:
-                pass
+            if book is None:
+                return 1 # isbn not founded
+            
+            if book.available:
+                self.user[id]["loans"].append(isbn)
+                return 2 # borrow succed
+            
+            return 3 # isbn not available
+                    
         
-        return False # user id not founded
-        
+        return 0 # user id not founded
+    # -----------------------------------------------------   
 
 
 class Library:
@@ -137,13 +145,23 @@ class Library:
         print("No books have been cataloged in this library yet!")
         return None
     
-    
+    # -------------------------EM CRIAÇÃO---------------------------
     def borrow_book(self, id, isbn):
         if self.root is not None:
             sys_return = self.user_manager.borrow_book(id, isbn)
             
-        if sys_return:
-            pass
+        if sys_return == 0:
+            print('User not founded!')
+            
+        if sys_return == 1:
+            print('ISBN not founded!')
+            
+        if sys_return == 2:
+            print('User: {}, boorow book: {}'.format(id, isbn))
+            
+        if sys_return == 3:
+            print("Book: {} is not available!".format(isbn))
+    # --------------------------------------------------------------
         
     
     def list_available_books(self):
