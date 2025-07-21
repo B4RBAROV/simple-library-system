@@ -58,6 +58,10 @@ library.find_book("978-9999999999")
 # Caso 5: Buscar ISBN duplicado (ISBN 978-0743273565) - deve encontrar The Great Gatsby
 print(f"Buscando ISBN (duplicado): 978-0743273565")
 library.find_book("978-0743273565")
-'''
+
 
 library.list_available_books()
+'''
+
+library.borrow_book('U005', '978-0547928227')
+library.borrow_book('U005', '978-0547928227')

@@ -48,12 +48,11 @@ Implemente tratamento de erros básico (ex: tentar emprestar um livro indisponí
 Garanta que o ISBN e o ID de usuário sejam sempre únicos.
 
 **Book:**
-- borrow()
 - return_book()
 - __str__
 
 **Users:**
-- borrow_book()
+- ~~borrow_book()~~
 - return_book()
 
 **Library:**

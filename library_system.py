@@ -28,12 +28,6 @@ class Book:
             
         return self.right.add_book(isbn, title, author)
     
-    # ----------------FUNCT FUTURA-------------------
-    def borrow(self, isbn):
-        pass
-    # -----------------------------------------------
-    
-    
     
     def find_book(self, isbn):
         if isbn == self.isbn:
@@ -78,23 +72,17 @@ class User:
         }
         return True
     
-    # --------------------EM CRIAÇÃO-----------------------
-    def borrow_book(self, id, isbn):
+
+    def id_validation(self, id):
         if id in self.user:
-            book = Library.find_book(isbn)
-            
-            if book is None:
-                return 1 # isbn not founded
-            
-            if book.available:
-                self.user[id]["loans"].append(isbn)
-                return 2 # borrow succed
-            
-            return 3 # isbn not available
-                    
+            return True # user id exists
         
-        return 0 # user id not founded
-    # -----------------------------------------------------   
+        return False # user id not founded
+    
+    
+    def borrow_book(self, id, isbn):
+        self.user[id]["loans"].append(isbn) # insert isbn in loans 
+
 
 
 class Library:
@@ -145,23 +133,32 @@ class Library:
         print("No books have been cataloged in this library yet!")
         return None
     
-    # -------------------------EM CRIAÇÃO---------------------------
+
     def borrow_book(self, id, isbn):
         if self.root is not None:
-            sys_return = self.user_manager.borrow_book(id, isbn)
+            sys_return = self.user_manager.id_validation(id) # confirm id
             
-        if sys_return == 0:
-            print('User not founded!')
+        print('----------Borrow Book----------')
             
-        if sys_return == 1:
-            print('ISBN not founded!')
+        if not sys_return:
+            print('User not founded!\n')
+            return False
             
-        if sys_return == 2:
-            print('User: {}, boorow book: {}'.format(id, isbn))
+        sys_return = self.root.find_book(isbn) # confirm book
             
-        if sys_return == 3:
-            print("Book: {} is not available!".format(isbn))
-    # --------------------------------------------------------------
+        if sys_return is None:
+            print('ISBN not founded!\n')
+            return False
+        
+        if not sys_return.available:
+            print('ISBN not available!')
+            return False
+            
+        sys_return.available = False # update available status
+        self.user_manager.borrow_book(id, isbn) # add book into loans by user
+        
+        print('User: {}, borrow book: {}\n'.format(id, isbn))
+        return True
         
     
     def list_available_books(self):
