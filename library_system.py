@@ -1,3 +1,6 @@
+import os
+from msvcrt import getch
+
 class Book:
     def __init__(self, isbn, title, author):
         self.title = title
@@ -90,6 +93,47 @@ class Library:
         self.root = None
         self.user_manager = User()
         
+    
+    # -------- In Production ---------------------------------------------------------------------------
+    def main_menu(self):
+        os.system('cls')
+        
+        print('--------- Library --------\n',
+              '\n COD   DESCRIPTION')
+        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   List available book.']
+        for i in range(len(funct)):
+            print(funct[i])
+        
+        user_return = int(input('\nEnter the feature code: '))
+        
+        if user_return == 1:
+            #self.add_book()
+            pass
+        
+        if user_return == 2:
+            #self.add_user()
+            pass
+            
+        if user_return == 3:
+            #self.find_book()
+            pass
+            
+        if user_return == 4:
+            #self.borrow_book()
+            pass
+            
+        if user_return == 5:
+            self.list_available_books()
+        
+        self.return_menu()
+            
+        
+    def return_menu(self):
+        print('\nPress any key to return to the main menu.')
+        getch()
+        self.main_menu()
+    # -------------------------------------------------------------------------------------------------         
+            
     
     def add_book(self, isbn, title, author):
         if self.root is not None:

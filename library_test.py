@@ -36,32 +36,4 @@ print("\n--- Testando add_user ---")
 for user in users_data:
     library.add_user(user["id"], user["name"])
 
-'''
-print("\n--- Testando find_book ---")
-
-# Caso 1: Livro que existe (The Great Gatsby - ISBN 978-0743273565)
-print(f"Buscando ISBN: 978-0743273565")
-library.find_book("978-0743273565")
-
-# Caso 2: Livro que existe (The Hobbit - ISBN 978-0547928227)
-print(f"Buscando ISBN: 978-0547928227")
-library.find_book("978-0547928227")
-
-# Caso 3: Livro que existe (The Alchemist - ISBN 978-0062315811)
-print(f"Buscando ISBN: 978-0062315811")
-library.find_book("978-0062315811")
-
-# Caso 4: Livro que NÃO existe (ISBN 978-9999999999)
-print(f"Buscando ISBN: 978-9999999999")
-library.find_book("978-9999999999")
-
-# Caso 5: Buscar ISBN duplicado (ISBN 978-0743273565) - deve encontrar The Great Gatsby
-print(f"Buscando ISBN (duplicado): 978-0743273565")
-library.find_book("978-0743273565")
-
-
-library.list_available_books()
-'''
-
-library.borrow_book('U005', '978-0547928227')
-library.borrow_book('U005', '978-0547928227')
+library.main_menu()
