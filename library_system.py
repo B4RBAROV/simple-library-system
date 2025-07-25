@@ -11,7 +11,7 @@ class Book:
         
         
     def __str__(self):
-        return 'ISBN: {};\nLivro: {};\nBy: {}.\n'.format(self.isbn, self.title, self.author)
+        return '\nISBN: {};\nLivro: {};\nBy: {}.\n'.format(self.isbn, self.title, self.author)
         
         
     def add_book(self, isbn, title, author):
@@ -94,35 +94,55 @@ class Library:
         self.user_manager = User()
         
     
-    # -------- In Production ---------------------------------------------------------------------------
     def main_menu(self):
         os.system('cls')
         
         print('--------- Library --------\n',
               '\n COD   DESCRIPTION')
-        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   List available book.']
+        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   List available book;', ' 00   Quit.']
         for i in range(len(funct)):
             print(funct[i])
         
         user_return = int(input('\nEnter the feature code: '))
         
-        if user_return == 1:
-            #self.add_book()
-            pass
+        if user_return == 0: # system off
+            os.system('cls')
+            print('\n============== SYSTEM OFF ==============\n')
+            return
         
-        if user_return == 2:
-            #self.add_user()
-            pass
+        if user_return == 1: # add book
+            print('\n--------- Book Cataloging --------\n')
             
-        if user_return == 3:
-            #self.find_book()
-            pass
+            isbn = input('ISBN: ')
+            title = input('Title: ')
+            author = input('Author: ')
             
-        if user_return == 4:
-            #self.borrow_book()
-            pass
+            self.add_book(isbn, title, author)
+        
+        if user_return == 2: # add user
+            print('\n--------- Registre User --------\n')
             
-        if user_return == 5:
+            id = input('ID: ')
+            name = input('Name: ')
+            
+            self.add_user(id, name)
+            
+        if user_return == 3: # find book
+            print('\n--------- Serching a Book --------\n')
+            
+            isbn = input('ISBN: ')
+            
+            self.find_book(isbn)
+            
+        if user_return == 4: # borrow book
+            print('\n--------- Borrow a Book --------\n')
+            
+            id = input('ID: ')
+            isbn = input('ISBN: ')
+            
+            self.borrow_book(id, isbn)
+            
+        if user_return == 5: # list available books
             self.list_available_books()
         
         self.return_menu()
@@ -131,8 +151,7 @@ class Library:
     def return_menu(self):
         print('\nPress any key to return to the main menu.')
         getch()
-        self.main_menu()
-    # -------------------------------------------------------------------------------------------------         
+        self.main_menu()        
             
     
     def add_book(self, isbn, title, author):
@@ -182,8 +201,6 @@ class Library:
         if self.root is not None:
             sys_return = self.user_manager.id_validation(id) # confirm id
             
-        print('----------Borrow Book----------')
-            
         if not sys_return:
             print('User not founded!\n')
             return False
@@ -207,7 +224,7 @@ class Library:
     
     def list_available_books(self):
         if self.root is not None:
-            print("-------Available Books-------")
+            print("\n-------Available Books-------")
             self.root.list_available_books()
             return True
         
