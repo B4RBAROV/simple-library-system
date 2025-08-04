@@ -11,7 +11,7 @@ class Book:
         
         
     def __str__(self):
-        return '\nISBN: {};\nLivro: {};\nBy: {}.\n'.format(self.isbn, self.title, self.author)
+        return print('\nISBN: {};\nLivro: {};\nBy: {}.\n'.format(self.isbn, self.title, self.author))
         
         
     def add_book(self, isbn, title, author):
@@ -53,7 +53,7 @@ class Book:
             self.left.list_available_books()
             
         if self.available:
-            print(self.__str__())
+            self.__str__()
         
         if self.right is not None:
             self.right.list_available_books()
@@ -85,6 +85,17 @@ class User:
     
     def borrow_book(self, id, isbn):
         self.user[id]["loans"].append(isbn) # insert isbn in loans 
+        
+        
+    def return_book(self, id, isbn):
+        self.user[id]["loans"].remove(isbn) # remove isbn in loans
+        
+        
+    def user_borrow_books(self, id):
+        for user in self.user:
+            if id == user:
+                print('Id: {};\nName: {};\n'.format(id, self.user[id]["name"]))
+                return self.user[id]["loans"]
 
 
 
@@ -99,7 +110,7 @@ class Library:
         
         print('--------- Library --------\n',
               '\n COD   DESCRIPTION')
-        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   List available book;', ' 00   Quit.']
+        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   Return a book',' 06   List available book;', ' 00   Quit.']
         for i in range(len(funct)):
             print(funct[i])
         
@@ -142,7 +153,15 @@ class Library:
             
             self.borrow_book(id, isbn)
             
-        if user_return == 5: # list available books
+        if user_return == 5: # return book
+            print('\n--------- Return a Book --------\n')
+            
+            id = input('User ID: ')
+            
+            self.return_book(id)
+            
+            
+        if user_return == 6: # list available books
             self.list_available_books()
         
         self.return_menu()
@@ -186,7 +205,7 @@ class Library:
             sys_return = self.root.find_book(isbn)
             
             if sys_return is not None:
-                print(sys_return.__str__())
+                sys_return.__str__()
                 return sys_return
             
             print("Didn't find any book with ISBN = {}\n".format(isbn))
@@ -205,7 +224,7 @@ class Library:
             print('User not founded!\n')
             return False
             
-        sys_return = self.root.find_book(isbn) # confirm book
+        sys_return = self.find_book(isbn) # confirm book
             
         if sys_return is None:
             print('ISBN not founded!\n')
@@ -219,6 +238,31 @@ class Library:
         self.user_manager.borrow_book(id, isbn) # add book into loans by user
         
         print('User: {}, borrow book: {}\n'.format(id, isbn))
+        return True
+        
+        
+    def return_book(self, id):
+        if not self.user_manager.id_validation(id):
+                print("User id ({}) didn't find".format(id))
+                return False
+            
+        loans = self.user_manager.user_borrow_books(id)
+        
+        if not loans:
+            return None
+        
+        for i in loans:
+            book = self.root.find_book(i)
+            book.__str__()
+            
+        isbn = input('\nSelect which book do you want to return.\nISBN: ')
+        
+        self.user_manager.return_book(id, isbn)
+        
+        book = self.root.find_book(isbn)
+        book.available = True
+        
+        print('\nBook returned!')
         return True
         
     
