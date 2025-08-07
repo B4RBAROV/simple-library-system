@@ -32,6 +32,51 @@ class Book:
         return self.right.add_book(isbn, title, author)
     
     
+    def remove_book(self, isbn, root):
+        its_me = False
+        heir_father = None
+        orphan = None
+        removed = False
+        
+        if isbn == self.isbn:
+            if self.left is None and self.right is None:
+                its_me = True
+                return removed, its_me
+        
+        if isbn < self.isbn:
+            if self.left is None:
+                return removed
+            
+            removed, its_me = self.left.remove_book(isbn, root)
+                
+        else:
+            if self.right is None:
+                return removed
+            
+            removed, its_me = self.right.remove_book(isbn, root)
+            
+        if not its_me:
+            if self == root:
+                return removed
+            return removed, its_me
+        
+        if heir_father is None:
+            if isbn == self.left.isbn:
+                self.left = None
+                
+            if isbn == self.right.isbn:
+                self.right = None
+                
+            removed = True
+            its_me = False
+            
+            if self == root:
+                return removed
+            return removed, its_me
+            
+        
+    
+    
     def find_book(self, isbn):
         if isbn == self.isbn:
             return self
@@ -110,7 +155,7 @@ class Library:
         
         print('--------- Library --------\n',
               '\n COD   DESCRIPTION')
-        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   Return a book',' 06   List available book;', ' 00   Quit.']
+        funct = [' 01   Catalog new book;', ' 02   Registry new user;', ' 03   Find a book;', ' 04   Borrow a book', ' 05   Return a book',' 06   Remove a book;',' 07   List available book;', ' 00   Quit.']
         for i in range(len(funct)):
             print(funct[i])
         
@@ -160,8 +205,13 @@ class Library:
             
             self.return_book(id)
             
+        if user_return == 6: # remove books
+            print('\n--------- Remove a Book --------\n')
+            isbn = input('ISBN: ')
             
-        if user_return == 6: # list available books
+            self.remove_book(isbn)
+            
+        if user_return == 7: # list available books
             self.list_available_books()
         
         self.return_menu()
@@ -187,6 +237,19 @@ class Library:
         self.root = Book(isbn, title, author)
         print('New book cataloged!\n')
         return True
+    
+    
+    def remove_book(self, isbn):
+        if self.root is not None:
+            sys_return = self.root.remove_book(isbn, self.root)
+            
+            if sys_return:
+                print('Book removed!')
+                return sys_return
+            
+        print('ISBN: {} do not exists!'.format(isbn))
+        return sys_return
+    
     
     
     def add_user(self, id, name):
